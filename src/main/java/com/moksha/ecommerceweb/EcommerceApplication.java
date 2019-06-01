@@ -1,5 +1,6 @@
 package com.moksha.ecommerceweb;
 
+import com.moksha.ecommerceweb.Models.OrderItem;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

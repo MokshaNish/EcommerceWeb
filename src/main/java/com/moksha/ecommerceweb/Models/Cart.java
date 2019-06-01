@@ -22,6 +22,8 @@ public class Cart {
     private int quantity;
 
 
+
+
     @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss", timezone = "Asia/Colombo")
     private Date createdDate;
 

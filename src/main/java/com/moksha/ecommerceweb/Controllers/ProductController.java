@@ -25,13 +25,14 @@ public class ProductController {
         return productrepo.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/all")
     public Product add(@RequestBody Product product){
         return productrepo.save(product);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id)
+    {
         productrepo.deleteById(id);
     }
 
