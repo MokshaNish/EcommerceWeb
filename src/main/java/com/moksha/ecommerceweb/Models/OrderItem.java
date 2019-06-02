@@ -1,16 +1,16 @@
 package com.moksha.ecommerceweb.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-
 @Getter
 @Setter
+@Entity
 public class OrderItem {
 
     @Id
@@ -18,16 +18,11 @@ public class OrderItem {
     private int id;
     private String status;
     private int quantity;
+    private int user_Id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderItem")
-    private List<Product> product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "purchaseItem_id")
-    private PurchaseItem purchaseItem;
-
-
-
-
-
+    @JoinColumn(name = "product_pid")
+    @JsonIgnoreProperties({"hibernateLazyInitializer","orderItemList"})
+    private Product product;
 }

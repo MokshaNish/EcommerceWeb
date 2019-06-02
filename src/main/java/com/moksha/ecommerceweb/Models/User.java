@@ -19,7 +19,7 @@ public class User {
     private String email;
     private String fName;
     private String lName;
-    private String type;
+    private String type = "Customer";
     private String password;
     private String contactNo;
 

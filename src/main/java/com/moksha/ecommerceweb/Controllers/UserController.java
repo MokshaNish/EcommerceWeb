@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -27,13 +27,20 @@ public class UserController {
     }
 
     @PostMapping
-    public User add(@RequestBody User user){
+    public User saveUserDetails(@RequestBody User user){
         return userrepo.save(user);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id){
         userrepo.deleteById(id);
+    }
+
+    @GetMapping("{email}")
+    @ResponseBody
+    public User getOnebyEmail(@PathVariable String email,String password){
+        System.out.println("Search User ID");
+        return userrepo.findByEmail(email).get();
     }
 
 }

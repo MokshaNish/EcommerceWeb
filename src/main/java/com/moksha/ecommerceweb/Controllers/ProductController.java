@@ -20,7 +20,7 @@ public class ProductController {
         return productrepo.findById(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Product> getAll(){
         return productrepo.findAll();
     }
@@ -35,5 +35,8 @@ public class ProductController {
     {
         productrepo.deleteById(id);
     }
+
+
+
 
 }
