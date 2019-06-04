@@ -5,6 +5,7 @@ import com.moksha.ecommerceweb.Models.CartForm;
 import com.moksha.ecommerceweb.Models.OrderItem;
 import com.moksha.ecommerceweb.Repositories.CartRepository;
 import com.moksha.ecommerceweb.Repositories.OrderItemRepository;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,11 @@ public class CartController {
     @GetMapping("/{id}")
     public Optional<Cart> get(@PathVariable int id) {
         return cartrepo.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCart(@PathVariable int id) {
+        cartrepo.deleteById(id);
     }
 
     @GetMapping("/user-id/{userId}")
@@ -56,22 +62,27 @@ public class CartController {
 
         Optional<Cart> c = cartrepo.findById(cartForm.getCartId());
 
-        if(c.isPresent()){
+        if (c.isPresent()) {
             Cart cart = c.get();
-            OrderItem orderItem = new OrderItem();
-            orderItem.setCart(cart);
-            orderItem.setProduct(cartForm.getProduct());
-            orderItem.setQuantity(cartForm.getQuantity());
-            return orderItemRepository.save(orderItem);
 
+            Optional<OrderItem> orderItemOptional = orderItemRepository.findByCartIdAndProductPid(cartForm.getCartId(), cartForm.getProduct().getPid());
+
+            if (orderItemOptional.isPresent()) {
+                OrderItem orderItem = orderItemOptional.get();
+
+                orderItem.setQuantity(orderItem.getQuantity() + cartForm.getQuantity());
+                orderItemRepository.save(orderItem);
+            } else {
+                OrderItem orderItem = new OrderItem();
+                orderItem.setCart(cart);
+                orderItem.setProduct(cartForm.getProduct());
+                orderItem.setQuantity(cartForm.getQuantity());
+                return orderItemRepository.save(orderItem);
+            }
         }
         return null;
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        cartrepo.deleteById(id);
-    }
 
 
 }
