@@ -22,28 +22,32 @@ public class OrderItemController {
     OrderItemService orderItemService;
 
     @GetMapping("/{id}")
-    public Optional<OrderItem> get(@PathVariable int id){
+    public Optional<OrderItem> get(@PathVariable int id) {
 
         return orderItemRepo.findById(id);
     }
 
     @GetMapping
-    public List<OrderItem> getAll(){
+    public List<OrderItem> getAll() {
+
+
         return orderItemRepo.findAll();
     }
 
-    @GetMapping ("/all")
-    public ResponseEntity<List<OrderItem>> getAllUserAndStatus(){
-        return orderItemService.getAllUserAndStatus();
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<List<OrderItem>> getAllUserAndStatus(@PathVariable int id) {
+//        return orderItemService.getAllUserAndStatus(id);
+//
+//    }
 
     @PostMapping
-    public OrderItem addProductToCart(@RequestBody OrderItem cartItem){
+    public OrderItem addProductToCart(@RequestBody OrderItem cartItem) {
+
         return orderItemRepo.save(cartItem);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         orderItemRepo.deleteById(id);
     }
 }

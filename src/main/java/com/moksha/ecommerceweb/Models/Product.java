@@ -25,10 +25,4 @@ public class Product {
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer","productList"})
     private Category category;
-
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    @JsonIgnoreProperties({"hibernateLazyInitializer","product"})
-    private List<OrderItem> orderItemList;
-
 }

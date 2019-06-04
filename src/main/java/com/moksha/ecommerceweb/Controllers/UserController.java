@@ -36,11 +36,9 @@ public class UserController {
         userrepo.deleteById(id);
     }
 
-    @GetMapping("{email}")
-    @ResponseBody
-    public User getOnebyEmail(@PathVariable String email,String password){
-        System.out.println("Search User ID");
-        return userrepo.findByEmail(email).get();
+    @PostMapping("/auth")
+    public User authUser(@RequestBody User user){
+        return userrepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
     }
 
 }

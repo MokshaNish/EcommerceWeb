@@ -16,13 +16,18 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String status;
     private int quantity;
-    private int user_Id;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_pid")
-    @JsonIgnoreProperties({"hibernateLazyInitializer","orderItemList"})
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnoreProperties("orderItems")
+    private Cart cart;
+
+    @ManyToOne
+    @JoinColumn
     private Product product;
+
+
+
 }
