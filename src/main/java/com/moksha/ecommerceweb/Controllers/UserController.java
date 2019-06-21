@@ -17,22 +17,26 @@ public class UserController {
     UserRepository userrepo;
 
     @GetMapping("/{id}")
-    public Optional<User> get(@PathVariable int id){
+    public Optional<User> get(@PathVariable int id)
+    {
         return userrepo.findById(id);
     }
 
     @GetMapping
-    public List<User> getAll(){
+    public List<User> getAll()
+    {
         return userrepo.findAll();
     }
 
     @PostMapping
-    public User saveUserDetails(@RequestBody User user){
+    public User saveUserDetails(@RequestBody User user)
+    {
         return userrepo.save(user);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id)
+    {
         userrepo.deleteById(id);
     }
 

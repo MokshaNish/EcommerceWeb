@@ -27,13 +27,26 @@ public class CartController {
         return cartrepo.findById(id);
     }
 
+    @DeleteMapping("order-product/{id}")
+    public void deleteOrderItem(@PathVariable int id) {
+        orderItemRepository.deleteById(id);
+    }
+
     @DeleteMapping("/{id}")
-    public void deleteCart(@PathVariable int id) {
-        cartrepo.deleteById(id);
+    public Cart deleteCart(@PathVariable int id) {
+        Optional<Cart> cart= cartrepo.findById(id);
+
+        if(cart.isPresent()) {
+            Cart c = cart.get();
+            c.setStatus("Purchased");
+            return cartrepo.save(c);
+        }
+
+        return null;
     }
 
     @GetMapping("/user-id/{userId}")
-    public Cart getUserId(@PathVariable int userId) {
+    public Cart getCartByUserId(@PathVariable int userId) {
 
         Optional<Cart> c = cartrepo.findByUserIdAndStatus(userId, "Pending");
 
@@ -57,15 +70,16 @@ public class CartController {
         return orderItemRepository.findAll();
     }
 
+
     @PostMapping("/add")
-    public OrderItem add(@RequestBody CartForm cartForm) {
+    public OrderItem addToCart(@RequestBody CartForm cartForm) {
 
         Optional<Cart> c = cartrepo.findById(cartForm.getCartId());
 
         if (c.isPresent()) {
             Cart cart = c.get();
 
-            Optional<OrderItem> orderItemOptional = orderItemRepository.findByCartIdAndProductPid(cartForm.getCartId(), cartForm.getProduct().getPid());
+    Optional<OrderItem> orderItemOptional = orderItemRepository.findByCartIdAndProductPid(cartForm.getCartId(), cartForm.getProduct().getPid());
 
             if (orderItemOptional.isPresent()) {
                 OrderItem orderItem = orderItemOptional.get();
