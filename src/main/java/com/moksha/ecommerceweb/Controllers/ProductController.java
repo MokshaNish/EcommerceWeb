@@ -26,8 +26,8 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public List<Product> getAll() {
-        return productrepo.findAll();
+    public Optional <List<Product>> getAll() {
+        return productrepo.findAllByStatus("Available");
     }
 
     @PostMapping()
@@ -46,5 +46,8 @@ public class ProductController {
         productrepo.deleteById(id);
     }
 
-
+    @PutMapping
+    public Product update(@RequestBody Product product){
+        return productrepo.save(product);
+    }
 }

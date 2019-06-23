@@ -19,6 +19,7 @@ public class Product {
     private double price;
     private int quantity;
     private String imageUrl;
+    private String status = "Available";
 
 
     @ManyToOne(fetch = FetchType.LAZY)
