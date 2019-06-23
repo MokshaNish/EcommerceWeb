@@ -57,8 +57,16 @@ public class CartController {
             cart.setUserId(userId);
             return cartrepo.save(cart);
         }
-
     }
+
+    @GetMapping("/order-history/{userId}")
+    public Optional <List<Cart>> getHistory(@PathVariable int userId){
+
+        return cartrepo.findAllByUserIdAndStatus(userId,"Purchased");
+    }
+
+
+
 
     @GetMapping
     public List<Cart> getAll() {
